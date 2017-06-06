@@ -24,8 +24,8 @@ class ContactContainer extends Component
 
 const mapStateToProps = (state) => {
     return {
-       contacts: state.contacts,
-       isFetching: state.isFetching
+       contacts: state.person.contacts,
+       isFetching: state.person.isFetching
     }
 }
 

@@ -24,8 +24,8 @@ class PersonContainer extends Component
 
 const mapStateToProps = (state) => {
     return {
-       persons: state.persons,
-       isFetching: state.isFetching
+       persons: state.person.persons,
+       isFetching: state.person.isFetching
     }
 }
 
