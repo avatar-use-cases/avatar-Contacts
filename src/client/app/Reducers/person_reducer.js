@@ -1,4 +1,4 @@
-import { ADD_PERSONSm ADD_CONTACTS } from '../ActionTypes/person_actions'
+import { ADD_PERSONS, ADD_CONTACTS } from '../ActionTypes/person_actions'
 import { REQUEST_ERROR, REQUEST_SUCCESS, REQUEST_PENDING } from '../ActionTypes/request_actions'
 const initialState = {
     persons : [],
