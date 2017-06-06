@@ -1,7 +1,9 @@
-import { ADD_PERSONSm ADD_CONTACTS } from '../ActionTypes/person_actions'
+import { ADD_PERSONS, ADD_PERSON, LOGIN, LOGOUT, ADD_CONTACTS, ADD_CONTACT} from '../ActionTypes/person_actions'
 import { REQUEST_ERROR, REQUEST_SUCCESS, REQUEST_PENDING } from '../ActionTypes/request_actions'
 const initialState = {
     persons : [],
+    activeUser: null,
+    logged_in: false,
     contacts: [],
     isFetching: false,
     requestErrorMessage: ''
@@ -17,6 +19,32 @@ function person(state = initialState, action) {
             return {
                 ...state,
                 contacts: action.contacts
+            }
+       case ADD_CONTACT:
+            return {
+                ...state,
+                contacts: [
+                  ...state.contacts,
+                  action.contact
+                ]
+            }
+        case LOGIN:
+          return {
+              ...state,
+              activeUser: action.user,
+              logged_in: true
+          }
+        case LOGOUT:
+          return initialState
+        case ADD_PERSON:
+            return {
+                ...state,
+                persons: [
+                  ...state.persons,
+                  action.person
+                ],
+                activeUser: action.person,
+                logged_in: true
             }
         case REQUEST_PENDING:
             return {

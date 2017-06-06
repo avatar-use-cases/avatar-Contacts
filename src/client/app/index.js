@@ -4,20 +4,20 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { Provider } from 'react-redux'
-import person from './Reducers/person_reducer'
+import reducer from './Reducers/reducer'
 import { getPersonsAsynch  } from './ActionTypes/person_actions'
-import PersonContainer from './Containers/person_container'
+import HomeContainer from './Containers/home_container'
 
 class App extends Component {
   render() {
     return (
         <div>
-          <PersonContainer />
+          <HomeContainer />
         </div>
     )
   }
 }
-let store = createStore(person, applyMiddleware(thunk, logger))
+let store = createStore(reducer, compose(applyMiddleware(thunk, logger)))
 store.dispatch(getPersonsAsynch())
 
 render(
@@ -25,4 +25,3 @@ render(
       <App />
     </Provider>,
     document.getElementById('app'));
-
