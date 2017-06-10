@@ -27,9 +27,11 @@
     "babel-preset-react": "^6.22.0",
     "css-loader": "^0.28.1",
     "html-webpack-plugin": "^2.26.0",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-autocomplete": "^1.5.6",
     "react-bootstrap": "^0.31.0",
+    "react-datepicker": "^0.47.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
@@ -39,12 +41,14 @@
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "css-loader": "^0.28.4",
     "eslint": "^3.14.0",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "html-loader": "^0.4.4",
+    "style-loader": "^0.18.2",
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.16.5"
   }

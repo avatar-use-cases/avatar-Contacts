@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {ListGroup, ListGroupItem, Well} from 'react-bootstrap'
 class Person extends Component{
 

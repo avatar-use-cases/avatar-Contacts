@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import Autocomplete from 'react-autocomplete'
+import PropTypes from 'prop-types'
 
 let styles = {
   item: {

@@ -17,7 +17,7 @@ class App extends Component {
     )
   }
 }
-let store = createStore(reducer, compose(applyMiddleware(thunk, logger)))
+let store = createStore(reducer, applyMiddleware(thunk, logger))
 store.dispatch(getPersonsAsynch())
 
 render(

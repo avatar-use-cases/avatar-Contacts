@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserAutocomplete from './user_autocomplete'
-import { loginUserAsynch } from '../ActionTypes/person_actions'
-
+import { loginUser, addContacts, getContactsAsynch} from '../ActionTypes/person_actions'
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -13,9 +12,8 @@ class Login extends Component {
     let thisUser = this.props.allUsers.find(findUserId)
     if(!thisUser)
       return
-    this.props.fetchEvents(thisUser.userId);
-    this.props.login(thisUser.userId)
-
+    this.props.login(thisUser);
+    this.props.getContacts(thisUser);
   }
   render() {
     let username // variable for referencing username <input> element
@@ -30,12 +28,13 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (id) => {
-      dispatch(addPersonAsynch(id))
+    login: (user) => {
+      dispatch(loginUser(user))
     },
-    fetchEvents: (id) => {
-      dispatch(fetchEvents(id))
+    getContacts: (activeUser) => {
+      dispatch(getContactsAsynch(activeUser))
     }
+
   }
 }
 

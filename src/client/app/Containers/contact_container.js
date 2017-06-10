@@ -1,19 +1,28 @@
 
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {ProgressBar, Jumbotron} from 'react-bootstrap'
+import PropTypes from 'prop-types'
+import {ProgressBar, Well} from 'react-bootstrap'
 import Contacts from '../Components/contacts'
+import ContactPrompt from '../Components/add_contacts'
+
 class ContactContainer extends Component
 {
     render(){
-        if (!this.props.isFetching) {
+        if (this.props.contacts === null) {
             return (
-                <Jumbotron>
-                    <Contacts contacts={this.props.contacts}/>
-                </Jumbotron>
+                <Well>
+                    <ContactPrompt userId={this.props.activeUser.userId} />
+                </Well>
             )
         } else {
-                return <ProgressBar active label="Loading" now = {50}/>
+                return (
+                <Well>
+                <Contacts contacts={this.props.contacts}/>
+                  <ContactPrompt userId={this.props.activeUser.userId} />
+                </Well>
+              )
+
             }
 
     }
@@ -24,8 +33,8 @@ class ContactContainer extends Component
 
 const mapStateToProps = (state) => {
     return {
-       contacts: state.person.contacts,
-       isFetching: state.person.isFetching
+       contacts: state.person.activeUser.contacts,
+       activeUser: state.person.activeUser.activeUserInfo,
     }
 }
 
