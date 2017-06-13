@@ -1,6 +1,6 @@
 import {requestError, requestSuccess, requestPending} from './request_actions'
-import { getPersons, getContacts, createContact, createAddress, createPerson, getPerson } from '../Functions/dispatch_func'
-
+import { getPersons, getContacts, getAddresses, createContact, createAddress, createPerson, getPerson } from '../Functions/dispatch_func'
+import {findContactsWithUserId, matchContactsWithAddresses} from '../Functions/helper_functions'
 export const ADD_PERSONS = 'ADD_PERSONS';
 export const ADD_CONTACTS = 'ADD_CONTACTS'
 export const ADD_CONTACT = 'ADD_CONTACT';
@@ -26,6 +26,7 @@ export function addContact(contact) {
 export function loginUser(user) {
     return {type: LOGIN, user}
 }
+
 export function getPersonsAsynch() {
     return function(dispatch){
         dispatch(requestPending())
@@ -40,41 +41,44 @@ export function getPersonsAsynch() {
     }
 }
 
+export function getAddressesAsynch(contacts, activeUser) {
+      return function (dispatch) {
+        dispatch(requestPending())
+          let success = (addresses) => {
+              let newContacts = matchContactsWithAddresses(contacts, addresses)
+              let userContacts = findContactsWithUserId(newContacts, activeUser.userId)
+              dispatch(addContacts(userContacts))
+              dispatch(requestSuccess())
+          }
+          let error = (error)=>{
+              dispatch(requestError(error.message))
+          }
+          getAddresses(success, error)
+      }
+}
+
 export function addPersonAsynch(person) {
     return function(dispatch) {
         dispatch(requestPending())
-        let success = (personId) => {
-              person.userId = personId
+        let success = (result) => {
+              person.userId = result.userId
               dispatch(addPerson(person))
               dispatch(requestSuccess())
         }
         let error = (error) => {
-            dispatch(requestError())
+            dispatch(requestError(error.message))
         }
-        dispatch(createPerson(success, error, person))
+         createPerson(success, error, person)
     }
 }
 
-export function loginUserAsynch(id){
-  return function(dispatch){
-    dispatch(requestPending())
-    let success = (user)=>{
-      dispatch(requestSuccess())
-      dispatch(loginUser(user))
-    }
-    let error = (error)=>{
-      dispatch(requestError(error.message))
-    }
-    getUser(success,error, id);
-  }
-}
 
-export function getContactsAsynch() {
+export function getContactsAsynch(activeUser) {
     return function(dispatch) {
       dispatch(requestPending())
       let success = (contacts)=>{
-          dispatch(addContacts(contacts))
           dispatch(requestSuccess())
+          dispatch(getAddressesAsynch(contacts, activeUser))
       }
       let error = (error)=>{
         dispatch(requestError(error.message))
@@ -85,33 +89,39 @@ export function getContactsAsynch() {
 }
 
 
-export function addContactAsynch(contact) {
+export function addContactAsynch(contact, address) {
     return function(dispatch) {
+      console.log(contact);
+      console.log(address);
         dispatch(requestPending())
-        contact.addressId = addressId;
-        let success = (contactId)=>{
-            contact.contactId = contactId;
-            dispatch(addContacts(contact))
+        let success = (result)=>{
+            let contactAddress = address
+            let contactRedux = contact
+            contactRedux.contactId = result.contactId;
+            contactRedux.address = contactAddress
+            dispatch(addContact(contactRedux))
             dispatch(requestSuccess())
         }
         let error = (error)=>{
             dispatch(requestError(error.message))
         }
-        dispatch(createContact(success, error, contact))
+      createContact(success, error, contact)
     }
 }
 
 export function addAddressAsynch(contact, address) {
     return function(dispatch) {
         dispatch(requestPending())
-        let success = (addressId) => {
-            contact.addressId = addressId
-            dispatch(addContactAsynch(contact))
+        let success = (result) => {
+            let addressRedux = address
+            addressRedux.addressId = result.addressId;
+            contact.address = result.addressId;
+            dispatch(addContactAsynch(contact, addressRedux))
             dispatch(requestSuccess())
         }
         let error = (error) => {
             dispatch(requestError(error.message))
         }
-        dispatch(createAddress(success, error, address))
+        createAddress(success, error, address)
     }
 }

@@ -12,14 +12,17 @@ export const getContacts = (success, error) => {
     axios.get(`${url}/contact`).then((result)=>success(result.data)).catch(error);
 }
 
+export const getAddresses = (success, error)=> {
+    axios.get(`${url}/address`).then((result)=>success(result.data)).catch(error);
+}
 export const createPerson = (success, error, person)=> {
-    axios.post(`${url}/person`, person).then((result)=>success(result.data.userId)).catch(error);
+    axios.post(`${url}/person`, person).then((result)=>success(result.data)).catch(error);
 }
 
 export const createContact = (success, error, contact) => {
-    axios.post(`${url}/contact`, contact).then((result)=>success(result.data.contactId)).catch(error);
+    axios.post(`${url}/contact`, contact).then((result)=>success(result.data)).catch(error);
 }
 
 export const createAddress = (success, error, address) => {
-    axios.post(`${url}/address`, address).then((result)=>success(result.data.addressId)).catch(error);
+    axios.post(`${url}/address`, address).then((result)=>success(result.data)).catch(error);
 }

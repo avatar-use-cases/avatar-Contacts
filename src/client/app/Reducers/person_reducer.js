@@ -2,9 +2,11 @@ import { ADD_PERSONS, ADD_PERSON, LOGIN, LOGOUT, ADD_CONTACTS, ADD_CONTACT} from
 import { REQUEST_ERROR, REQUEST_SUCCESS, REQUEST_PENDING } from '../ActionTypes/request_actions'
 const initialState = {
     persons : [],
-    activeUser: null,
+    activeUser: {
+      activeUserInfo:{},
+      contacts: []
+    },
     logged_in: false,
-    contacts: [],
     isFetching: false,
     requestErrorMessage: ''
 }
@@ -18,20 +20,29 @@ function person(state = initialState, action) {
         case ADD_CONTACTS:
             return {
                 ...state,
-                contacts: action.contacts
+                activeUser: {
+                    ...state.activeUser,
+                    contacts: action.contacts
+                }
             }
        case ADD_CONTACT:
             return {
                 ...state,
-                contacts: [
-                  ...state.contacts,
-                  action.contact
-                ]
+                activeUser: {
+                    ...state.activeUser,
+                    contacts: [
+                        ...state.activeUser.contacts,
+                        action.contact
+                    ]
+                }
             }
         case LOGIN:
           return {
               ...state,
-              activeUser: action.user,
+              activeUser: {
+                ...state.activeUser,
+                activeUserInfo: action.user
+              },
               logged_in: true
           }
         case LOGOUT:
@@ -43,7 +54,10 @@ function person(state = initialState, action) {
                   ...state.persons,
                   action.person
                 ],
-                activeUser: action.person,
+                activeUser: {
+                  ...state.activeUser,
+                  activeUserInfo: action.person
+                },
                 logged_in: true
             }
         case REQUEST_PENDING:
