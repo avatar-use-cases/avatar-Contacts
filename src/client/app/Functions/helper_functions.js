@@ -1,3 +1,5 @@
+import Papa from 'papaparse'
+
 export const turnIdsToUsernames = (allUsers, event, key) =>{
   let thisList = event[key].map((id)=>{
     let this_person = allUsers.find((thisUser)=>{
@@ -8,6 +10,16 @@ export const turnIdsToUsernames = (allUsers, event, key) =>{
   return thisList
 }
 
+export const convertFile = (files, success) => {
+
+}
+
+export const parseJSON = (contacts) => {
+    let contactsToAdd = []
+    contacts.map((contact) => {
+        let tempContact
+    })
+}
 export const turnUsernamesToIds = (allUsers, event, key) => {
     let thisList = event[key].map((username) => {
       let person = allUsers.find((user)=>{
@@ -19,10 +31,9 @@ export const turnUsernamesToIds = (allUsers, event, key) => {
 }
 
 export const findContactsWithUserId = (allContacts, userId) => {
-    let contactList = [];
-    allContacts.map((contact)=>{
+  let contactList =  allContacts.map((contact)=>{
         if (contact.userId === userId) {
-            contactList.push(contact);
+            return contact
         }
     })
     return contactList;

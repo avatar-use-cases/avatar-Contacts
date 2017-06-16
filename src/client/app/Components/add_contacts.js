@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, StyleSheet} from 'react'
+import React, { Component, StyleSheet} from 'react'
+import {PropTypes} from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
@@ -6,7 +7,7 @@ import UserAutocomplete from './user_autocomplete'
 import PrettyPrint from './pretty_print'
 import {Well, Button} from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css';
-import {addAddressAsynch} from '../ActionTypes/person_actions'
+import {convertFile} from '../ActionTypes/person_actions'
 
 const initialContactState = {
   name: '',

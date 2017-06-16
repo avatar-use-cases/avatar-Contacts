@@ -1,12 +1,14 @@
 import {requestError, requestSuccess, requestPending} from './request_actions'
-import { getPersons, getContacts, getAddresses, createContact, createAddress, createPerson, getPerson } from '../Functions/dispatch_func'
+import { getPersons, getContacts, getAddresses, createContact, createAddress, createPerson, getPerson, deleteContact, deleteAddress} from '../Functions/dispatch_func'
 import {findContactsWithUserId, matchContactsWithAddresses} from '../Functions/helper_functions'
+
 export const ADD_PERSONS = 'ADD_PERSONS';
 export const ADD_CONTACTS = 'ADD_CONTACTS'
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const ADD_PERSON = 'ADD_PERSON';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const DELETE_CONTACT = 'DELETE_CONTACT'
 
 export function addPersons(persons) {
     return { type: ADD_PERSONS, persons}
@@ -21,6 +23,10 @@ export function addContacts(contacts) {
 
 export function addContact(contact) {
     return {type: ADD_CONTACT, contact}
+}
+
+export function removeContact(contactId) {
+    return {type: DELETE_CONTACT, contactId}
 }
 
 export function loginUser(user) {
@@ -91,9 +97,6 @@ export function getContactsAsynch(activeUser) {
 
 export function addContactAsynch(contact, address) {
     return function(dispatch) {
-      console.log(contact);
-      console.log(address);
-        dispatch(requestPending())
         let success = (result)=>{
             let contactAddress = address
             let contactRedux = contact
@@ -117,11 +120,28 @@ export function addAddressAsynch(contact, address) {
             addressRedux.addressId = result.addressId;
             contact.address = result.addressId;
             dispatch(addContactAsynch(contact, addressRedux))
-            dispatch(requestSuccess())
         }
         let error = (error) => {
             dispatch(requestError(error.message))
         }
         createAddress(success, error, address)
+    }
+}
+
+export function deleteContactAsynch(contact) {
+    return function(dispatch) {
+        dispatch(requestPending())
+        let success = (result) => {
+            dispatch(removeContact(contact.contactId))
+            dispatch(requestSuccess())
+        }
+        let successAddress = (result) => {
+
+        }
+        let error = (error)=>{
+            dispatch(requestError(error.message))
+        }
+        deleteAddress(successAddress, error, contact.address.addressId)
+        deleteContact(success, error, contact.contactId)
     }
 }
