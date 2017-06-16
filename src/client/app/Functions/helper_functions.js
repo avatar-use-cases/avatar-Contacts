@@ -10,16 +10,6 @@ export const turnIdsToUsernames = (allUsers, event, key) =>{
   return thisList
 }
 
-export const convertFile = (files, success) => {
-
-}
-
-export const parseJSON = (contacts) => {
-    let contactsToAdd = []
-    contacts.map((contact) => {
-        let tempContact
-    })
-}
 export const turnUsernamesToIds = (allUsers, event, key) => {
     let thisList = event[key].map((username) => {
       let person = allUsers.find((user)=>{
