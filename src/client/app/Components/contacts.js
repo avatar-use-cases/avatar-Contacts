@@ -8,7 +8,7 @@ class Contacts extends Component {
         this.getContacts = this.getContacts.bind(this)
     }
     getContacts (){
-        return this.props.contacts.map((contact)=><Contact contact={contact} key={contact.contactId}/>)
+        return this.props.contacts.map((contact)=><Contact contact={contact} key={contact.contactId} onSubmit={this.props.onSubmit}/>)
     }
     render() {
 

@@ -1,4 +1,4 @@
-import { ADD_PERSONS, ADD_PERSON, LOGIN, LOGOUT, ADD_CONTACTS, ADD_CONTACT} from '../ActionTypes/person_actions'
+import { ADD_PERSONS, ADD_PERSON, LOGIN, LOGOUT, ADD_CONTACTS, ADD_CONTACT, DELETE_CONTACT} from '../ActionTypes/person_actions'
 import { REQUEST_ERROR, REQUEST_SUCCESS, REQUEST_PENDING } from '../ActionTypes/request_actions'
 const initialState = {
     persons : [],
@@ -36,6 +36,17 @@ function person(state = initialState, action) {
                     ]
                 }
             }
+        case DELETE_CONTACT:
+          return {
+              ...state,
+              activeUser: {
+                  ...state.activeUser,
+                  contacts: state.activeUser.contacts.filter((contact)=> {
+                    return contact.contactId != action.contactId
+                  })
+              }
+          }
+
         case LOGIN:
           return {
               ...state,

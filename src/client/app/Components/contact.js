@@ -1,12 +1,27 @@
 import React, {Component} from 'react'
-import {Well, ListGroup, ListGroupItem} from 'react-bootstrap'
+import {Well, ListGroup, ListGroupItem, Button} from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 class Contact extends Component {
 
+  constructor(props){
+      super(props)
+      this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  onSubmit(){
+      let contact = this.props.contact
+      this.props.onSubmit(contact)
+  }
+
     render() {
       var contact = this.props.contact
+
       return (
+        <form onSubmit={(e)=>{
+          e.preventDefault()
+          this.onSubmit()}
+        }>
           <ListGroup>
             <ListGroupItem><h2>{contact.name}</h2></ListGroupItem>
             <ListGroupItem>{contact.nickname}</ListGroupItem>
@@ -23,6 +38,8 @@ class Contact extends Component {
             <ListGroupItem>{contact.relation}</ListGroupItem>
             <ListGroupItem>{contact.notes}</ListGroupItem>
           </ListGroup>
+          <Button bsStyle="danger" type="submit">Delete Contact</Button>
+        </form>
       )
     }
 }
